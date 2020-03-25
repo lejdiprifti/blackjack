@@ -47,6 +47,7 @@ class Game():
                 if bet < player.account:
                     player.place_bet(bet)
                     self.start_game(player, bet)
+                    pass
                 else:
                     print('Bet cannot be larger than your current account.')
             except:
@@ -80,10 +81,9 @@ class Game():
     
     def hit(self, cards, user_array):
         user_array.append(cards.pop())
-        return self.check_sum(user_array)
             
     def check_result(self):
-        player_sum = 0 
+        player_sum = 0
         computer_sum = 0
         for card in self.player_cards:
             player_sum = player_sum + card.points
@@ -109,6 +109,12 @@ class Game():
                  print(f'Congrats! You won {bet}$.')
             else:
                 print(f'Whoops! {player.name}, you lost this hand.')
+    
+    def get_sum_computer_cards(self):
+        sum_cards = 0
+        for card in self.computer_cards:
+            sum_cards += card.points
+        return sum_cards
     
     def print_player_cards(self):
         '''
@@ -138,9 +144,11 @@ class Game():
         # ask for hit or stay
         while True:
             player_choice = input(f'{player.name}, do you want to hit or stay? h/s ')
+
             if player_choice == 'h':
 
-                player_result = self.hit(cards, self.player_cards)
+                self.hit(cards, self.player_cards)
+                player_result = self.check_sum(self.player_cards)
                 print(f'{player.name}')
                 self.print_player_cards()
 
@@ -153,23 +161,10 @@ class Game():
                     self.print_full_dealer_cards()
                     break
 
-                computer_result = self.hit(cards, self.computerCards)
-                print('Dealer')
-                self.print_dealer_cards()
-
-                # check if computer has won or busted
-                if computer_result == 'WON' or computer_result == 'BUST':
-                    self.validate_hit_result(computer_result, dealer, bet)
-                    print(f'{player.name}')
-                    self.print_player_cards()
-                    print('Dealer')
-                    self.print_full_dealer_cards()
-                    break
             elif player_choice == 's':
-                # print the cards each player currently has
-                print(f'{player.name}')
-                self.print_player_cards()
-                print('Dealer')
+                while self.get_sum_computer_cards() < 17:
+                    self.hit(cards, self.computer_cards)
+                print('Dealer:')
                 self.print_full_dealer_cards()
                 # check the sum of both players and if True, finish this hand
                 if self.check_result():
