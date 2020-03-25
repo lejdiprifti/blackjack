@@ -13,7 +13,8 @@ class Deck():
             for suit in self.suits:
                 card = Card(name, suit, self.get_points(name))
                 self.cardArray.append(card)
-        return random.shuffle(self.cardArray)
+        random.shuffle(self.cardArray)
+        return self.cardArray
     
     def get_points(self,name):
         switcher = {
