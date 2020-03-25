@@ -18,14 +18,14 @@ class Game():
         Asks for input to play game or not and continues with the procedure.
         '''
         choice = input('Do you want to play a game? y/n ')
-        if choice != 'y' and choice != 'n':
+        if choice not in ('y', 'n'):
             self.begin_game()
         elif choice == 'y':
             player = self.identify_player()
             self.place_bet(player)
         else:
             pass
-        
+
     def identify_player(self):
         '''
         '''
@@ -62,8 +62,8 @@ class Game():
         for i in range(0, 3, 2):
             self.player_cards.append(cards.pop(i))
             self.computer_cards.append(cards.pop(i))
-        print(f'{player.name}, you have this cards.\n{self.player_cards[0].name} {self.player_cards[1].suit}\n{self.player_cards[1].name} {self.player_cards[1].suit}')
-        print(f'Dealer, you have this cards: \n{self.computer_cards[0].name} {self.computer_cards[0].suit} \nHidden')
+        print(f'{player.name}, you have this cards.\n{str(self.player_cards[0])}\n{str(self.player_cards[1])}')
+        print(f'Dealer, you have this cards: \n{str(self.computer_cards[0])}\nHidden')
 
 
     def check_sum(self, user_array):
@@ -78,10 +78,10 @@ class Game():
             return 'WON'
         else:
             return 'BUST'
-    
+
     def hit(self, cards, user_array):
         user_array.append(cards.pop())
-            
+
     def check_result(self):
         player_sum = 0
         computer_sum = 0
@@ -90,7 +90,7 @@ class Game():
         for card in self.computer_cards:
             computer_sum = computer_sum + card.points
         return player_sum > computer_sum
-        
+
     def replay(self, player):
         answer = input(f'{player.name}, do you want to play another hand? y/n ')
         if answer == 'y':
@@ -109,7 +109,7 @@ class Game():
                  print(f'Congrats! You won {bet}$.')
             else:
                 print(f'Whoops! {player.name}, you lost this hand.')
-    
+
     def get_sum_computer_cards(self):
         sum_cards = 0
         for card in self.computer_cards:
@@ -120,22 +120,22 @@ class Game():
         '''
         '''
         for card in self.player_cards:
-            print(f'Card: {card.name} {card.suit}')
+            print(card)
     
     def print_dealer_cards(self):
         '''
         '''
         for i in range(0, len(self.computer_cards) - 1):
-            print(f'Card: {self.computer_cards[i].name} {self.computer_cards[i].suit}')
+            print(self.computer_cards[i])
 
     def print_full_dealer_cards(self):
         for card in self.computer_cards:
-            print(f'Card: {card.name} {card.suit}')
-    
+            print(card)
+
     def start_game(self, player, bet):
         self.player_cards = []
         self.computer_cards = []
-        dealer = Player('Dealer', 0)
+
         # create the deck of cards
         deck = Deck()
         cards = deck.create_card_array()

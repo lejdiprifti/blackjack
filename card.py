@@ -6,7 +6,7 @@ class Card():
         self.points = points
 
     def __str__(self):
-        return f'Card: name = {self.name} and suit = {self.suit}'
+        return f'Card: {self.name} {self.suit}'
 
     def __len__(self):
         return f'Card has a total of {self.points} points.'
