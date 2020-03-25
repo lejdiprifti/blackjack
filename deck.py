@@ -18,7 +18,7 @@ class Deck():
     
     def get_points(self,name):
         switcher = {
-            'ace': 1,
+            'ace': 11,
             '2': 2,
             '3': 3,
             '4': 4,

@@ -72,6 +72,7 @@ class Game():
         sum_array = 0
         for card in user_array:
             sum_array = sum_array + card.points
+        self.correct_aces(user_array, sum_array)
         if sum_array < 21:
             return 'CONTINUE'
         elif sum_array == 21:
@@ -82,6 +83,12 @@ class Game():
     def hit(self, cards, user_array):
         user_array.append(cards.pop())
 
+    def correct_aces(self, user_array, array_sum):
+        if array_sum > 21:
+            for card in user_array:
+                if card.name == 'ace':
+                    array_sum -= 10
+
     def check_result(self):
         player_sum = 0
         computer_sum = 0
@@ -89,7 +96,7 @@ class Game():
             player_sum = player_sum + card.points
         for card in self.computer_cards:
             computer_sum = computer_sum + card.points
-        return player_sum > computer_sum
+        return player_sum > computer_sum or computer_sum > 21
 
     def replay(self, player):
         answer = input(f'{player.name}, do you want to play another hand? y/n ')
